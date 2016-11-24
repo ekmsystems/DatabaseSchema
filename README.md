@@ -1,2 +1,2 @@
-# DatabaseSchema.OleDb
-Library for extracing the schema from an OleDb database.
+# DatabaseSchema
+Library for extracing the schema from a database.
