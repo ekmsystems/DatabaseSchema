@@ -1,0 +1,60 @@
+version: '{build}'
+image: Visual Studio 2013
+configuration: Release
+pull_requests:
+  do_not_increment_build_number: true
+
+nuget:
+  account_feed: true
+  project_feed: true
+  disable_publish_on_pr: true
+
+environment:
+  COVERALLS_REPO_TOKEN:
+    secure: 5Or6Eq2huu4NSN/1+Cc9w3XYte1eEj4vDi65kAxPUZN4z7PEixKpDtYli9O3lFwG
+
+cache:
+  - packages -> **\packages.config
+
+install:
+  - ps: choco install gitversion.portable -pre -y
+
+assembly_info:
+  patch: true
+
+before_build:
+  - nuget restore src/DatabaseSchema.sln
+  - ps: gitversion /l console /output buildserver /updateAssemblyInfo /b (get-item env:APPVEYOR_REPO_BRANCH).Value
+
+build:
+  project: src/DatabaseSchema.sln
+
+after_build:
+  - cmd: nuget pack src\DatabaseSchema\DatabaseSchema.csproj -IncludeReferencedProjects -Build -Version "%GitVersion_NuGetVersion%" -Prop "target=%CONFIGURATION%"
+
+test_script:
+  - nuget install NUnit.Runners -Version 3.4.1 -OutputDirectory tools
+  - nuget install OpenCover -Version 4.6.519 -OutputDirectory tools
+  - nuget install coveralls.net -Version 0.412.0 -OutputDirectory tools
+  - ps: >-
+      .\tools\OpenCover.4.6.519\tools\OpenCover.Console.exe -register:user -target:"tools\NUnit.ConsoleRunner.3.4.1\tools\nunit3-console.exe" "-targetargs:""src\DatabaseSchema.Tests\bin\$env:CONFIGURATION\DatabaseSchema.Tests.dll"" –appveyor –noshadow" -filter:"+[DatabaseSchema*]*" -output:opencoverCoverage.xml
+
+      $coveralls = (Resolve-Path "tools/coveralls.net.*/tools/csmacnz.coveralls.exe").ToString()
+
+      $env:APPVEYOR_BUILD_NUMBER
+
+      & $coveralls --opencover -i opencoverCoverage.xml --repoToken $env:COVERALLS_REPO_TOKEN --useRelativePaths --commitId $env:APPVEYOR_REPO_COMMIT --commitBranch $env:APPVEYOR_REPO_BRANCH --commitAuthor $env:APPVEYOR_REPO_COMMIT_AUTHOR --commitEmail $env:APPVEYOR_REPO_COMMIT_AUTHOR_EMAIL --commitMessage $env:APPVEYOR_REPO_COMMIT_MESSAGE --jobId $env:APPVEYOR_BUILD_NUMBER
+
+artifacts:
+  - path: '*.nupkg'
+    name: NuGet
+
+deploy:
+  - provider: Environment
+    name: EKM PreRelease NuGet Feed
+    on:
+      branch: master
+  - provider: Environment
+    name: Public NuGet Feed
+    on:
+      appveyor_repo_tag: true
