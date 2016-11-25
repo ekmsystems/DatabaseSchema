@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Data.OleDb;
-using DatabaseSchema.OleDb.Tests.Helpers;
+using DatabaseSchema.Tests.Helpers;
 
 namespace DatabaseSchema.OleDb.Tests
 {

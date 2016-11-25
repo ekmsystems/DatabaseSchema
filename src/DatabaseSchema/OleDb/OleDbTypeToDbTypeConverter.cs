@@ -42,10 +42,6 @@ namespace DatabaseSchema.OleDb
                     return DbType.Decimal;
                 case OleDbType.Double:
                     return DbType.Double;
-                case OleDbType.Empty:
-                    return DbType.Object;
-                case OleDbType.Error:
-                    return DbType.Object;
                 case OleDbType.Filetime:
                     return DbType.DateTime;
                 case OleDbType.Guid:

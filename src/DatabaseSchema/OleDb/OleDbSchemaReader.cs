@@ -4,7 +4,6 @@ namespace DatabaseSchema.OleDb
 {
     public class OleDbSchemaReader : IDbSchemaReader
     {
-        private readonly IOleDbConnectionWrapper _connection;
         private readonly ITableColumnExtractor _tableColumnExtractor;
         private readonly ITableIndexExtractor _tableIndexExtractor;
 
@@ -20,17 +19,16 @@ namespace DatabaseSchema.OleDb
             ITableColumnExtractor tableColumnExtractor,
             ITableIndexExtractor tableIndexExtractor)
         {
-            _connection = connection;
-            _tableColumnExtractor = tableColumnExtractor ?? new TableColumnExtractor();
-            _tableIndexExtractor = tableIndexExtractor ?? new TableIndexExtractor();
+            _tableColumnExtractor = tableColumnExtractor ?? new OleDbTableColumnExtractor(connection);
+            _tableIndexExtractor = tableIndexExtractor ?? new OleDbTableIndexExtractor(connection);
         }
 
         public DbSchema GetSchema(string tableName)
         {
             return new DbSchema
             {
-                Columns = _tableColumnExtractor.Extract(tableName, _connection),
-                Indexes = _tableIndexExtractor.Extract(tableName, _connection)
+                Columns = _tableColumnExtractor.Extract(tableName),
+                Indexes = _tableIndexExtractor.Extract(tableName)
             };
         }
     }

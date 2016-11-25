@@ -6,8 +6,8 @@
     <ProjectGuid>{75E71619-993D-411A-92FE-8CCD67D79482}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DatabaseSchema.OleDb.Tests</RootNamespace>
-    <AssemblyName>DatabaseSchema.OleDb.Tests</AssemblyName>
+    <RootNamespace>DatabaseSchema.Tests</RootNamespace>
+    <AssemblyName>DatabaseSchema.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -98,20 +98,19 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Helpers\PathHelper.cs" />
-    <Compile Include="OleDbSchemaReaderTests.cs" />
+    <Compile Include="Helpers\TableColumnSchemaHelper.cs" />
+    <Compile Include="Helpers\TableIndexSchemaHelper.cs" />
+    <Compile Include="OleDb\OleDbSchemaReaderTests.cs" />
+    <Compile Include="OleDb\OleDbTypeToDbTypeConverterTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TableColumnExtractorTests.cs" />
-    <Compile Include="TableIndexExtractorTests.cs" />
+    <Compile Include="OleDb\OleDbTableColumnExtractorTests.cs" />
+    <Compile Include="OleDb\OleDbTableIndexExtractorTests.cs" />
     <Compile Include="TestDatabase.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DatabaseSchema.OleDb\DatabaseSchema.OleDb.csproj">
-      <Project>{c41c4166-b3e1-4f8c-843f-93a2e0bcc288}</Project>
-      <Name>DatabaseSchema.OleDb</Name>
-    </ProjectReference>
     <ProjectReference Include="..\DatabaseSchema\DatabaseSchema.csproj">
       <Project>{e7baccc6-27d5-4d2a-88d1-05885eba78ee}</Project>
       <Name>DatabaseSchema</Name>

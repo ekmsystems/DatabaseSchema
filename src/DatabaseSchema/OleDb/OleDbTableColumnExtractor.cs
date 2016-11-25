@@ -5,21 +5,23 @@ using System.Data.OleDb;
 
 namespace DatabaseSchema.OleDb
 {
-    public interface ITableColumnExtractor
+    internal class OleDbTableColumnExtractor : ITableColumnExtractor
     {
-        IEnumerable<DbColumn> Extract(string tableName, IOleDbConnectionWrapper connection);
-    }
+        private readonly IOleDbConnectionWrapper _connection;
 
-    internal class TableColumnExtractor : ITableColumnExtractor
-    {
-        public IEnumerable<DbColumn> Extract(string tableName, IOleDbConnectionWrapper connection)
+        public OleDbTableColumnExtractor(IOleDbConnectionWrapper connection)
+        {
+            _connection = connection;
+        }
+
+        public IEnumerable<DbColumn> Extract(string tableName)
         {
             var restrictions = new object[] { null, null, tableName };
-            var schema = connection.GetOleDbSchemaTable(OleDbSchemaGuid.Columns, restrictions);
+            var schema = _connection.GetOleDbSchemaTable(OleDbSchemaGuid.Columns, restrictions);
 
             foreach (DataRow dr in schema.Rows)
             {
-                yield return new DbColumn
+                yield return new OleDbColumn
                 {
                     Name = dr.GetValue("COLUMN_NAME", Convert.ToString),
                     DataType = ParseType((OleDbType) dr.GetValue("DATA_TYPE", Convert.ToInt32)),
@@ -29,7 +31,7 @@ namespace DatabaseSchema.OleDb
                     MaxLength = dr.GetValue<int?>("CHARACTER_MAXIMUM_LENGTH", x => Convert.ToInt32(x), null),
                     NumericPrecision = dr.GetValue<int?>("NUMERIC_PRECISION", x => Convert.ToInt32(x), null),
                     NumericScale = dr.GetValue<int?>("NUMERIC_SCALE", x => Convert.ToInt32(x), null),
-                    DateTimePrecision = dr.GetValue<int?>("DATETIME_PRECISION", x => Convert.ToInt32(x), null)
+                    OleDbType = (OleDbType) dr.GetValue("DATA_TYPE", Convert.ToInt32)
                 };
             }
         }

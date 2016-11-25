@@ -2,22 +2,22 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.OleDb;
-using System.Linq;
-using System.Text;
 
 namespace DatabaseSchema.OleDb
 {
-    public interface ITableIndexExtractor
+    internal class OleDbTableIndexExtractor : ITableIndexExtractor
     {
-        IEnumerable<DbIndex> Extract(string tableName, IOleDbConnectionWrapper connection);
-    }
+        private readonly IOleDbConnectionWrapper _connection;
 
-    internal class TableIndexExtractor : ITableIndexExtractor
-    {
-        public IEnumerable<DbIndex> Extract(string tableName, IOleDbConnectionWrapper connection)
+        public OleDbTableIndexExtractor(IOleDbConnectionWrapper connection)
+        {
+            _connection = connection;
+        }
+
+        public IEnumerable<DbIndex> Extract(string tableName)
         {
             var restrictions = new object[] {null, null, null, null, tableName};
-            var schema = connection.GetOleDbSchemaTable(OleDbSchemaGuid.Indexes, restrictions);
+            var schema = _connection.GetOleDbSchemaTable(OleDbSchemaGuid.Indexes, restrictions);
             
             foreach (DataRow dr in schema.Rows)
             {

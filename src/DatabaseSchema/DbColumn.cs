@@ -12,6 +12,5 @@ namespace DatabaseSchema
         public int? MaxLength { get; set; }
         public int? NumericPrecision { get; set; }
         public int? NumericScale { get; set; }
-        public int? DateTimePrecision { get; set; }
     }
 }
