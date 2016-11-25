@@ -3,6 +3,7 @@
     public class DbIndex
     {
         public string Name { get; set; }
+        public int Position { get; set; }
         public bool IsPrimaryKey { get; set; }
         public bool IsUnique { get; set; }
         public bool IsClustered { get; set; }

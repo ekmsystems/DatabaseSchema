@@ -24,6 +24,7 @@ namespace DatabaseSchema.OleDb
                 yield return new DbIndex
                 {
                     Name = Convert.ToString(dr["INDEX_NAME"]),
+                    Position = Convert.ToInt32(dr["ORDINAL_POSITION"]),
                     IsPrimaryKey = Convert.ToBoolean(dr["PRIMARY_KEY"]),
                     IsUnique = Convert.ToBoolean(dr["UNIQUE"]),
                     IsClustered = Convert.ToBoolean(dr["CLUSTERED"]),

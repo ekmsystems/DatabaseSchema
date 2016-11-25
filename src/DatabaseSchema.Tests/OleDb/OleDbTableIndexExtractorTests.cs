@@ -30,6 +30,7 @@ namespace DatabaseSchema.Tests.OleDb
                 new DbIndex
                 {
                     Name = "idx_ID",
+                    Position = 1,
                     IsPrimaryKey = true,
                     IsUnique = true,
                     IsClustered = true,
@@ -39,6 +40,7 @@ namespace DatabaseSchema.Tests.OleDb
                 new DbIndex
                 {
                     Name = "idx_Username",
+                    Position = 1,
                     IsPrimaryKey = false,
                     IsUnique = false,
                     IsClustered = false,
@@ -62,6 +64,7 @@ namespace DatabaseSchema.Tests.OleDb
             for (var i = 0; i < indexes.Length; i++)
             {
                 Assert.AreEqual(indexes[i].Name, results[i].Name);
+                Assert.AreEqual(indexes[i].Position, results[i].Position);
                 Assert.AreEqual(indexes[i].IsPrimaryKey, results[i].IsPrimaryKey);
                 Assert.AreEqual(indexes[i].IsUnique, results[i].IsUnique);
                 Assert.AreEqual(indexes[i].IsClustered, results[i].IsClustered);
