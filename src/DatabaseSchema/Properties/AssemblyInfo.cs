@@ -6,9 +6,9 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("DatabaseSchema")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Library for extracing the schema from an OleDb database.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("mrstebo")]
 [assembly: AssemblyProduct("DatabaseSchema")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]
