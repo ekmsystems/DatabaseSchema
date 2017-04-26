@@ -8,6 +8,8 @@ namespace DatabaseSchema
         private IEnumerable<DbColumn> _columns;
         private IEnumerable<DbIndex> _indexes;
 
+        public string TableName { get; set; }
+
         public IEnumerable<DbColumn> Columns
         {
             get { return _columns ?? Enumerable.Empty<DbColumn>(); } 
