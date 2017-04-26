@@ -2,7 +2,7 @@
 using System.Data.OleDb;
 using DatabaseSchema.Tests.Helpers;
 
-namespace DatabaseSchema.OleDb.Tests
+namespace DatabaseSchema.Tests
 {
     internal static class TestDatabase
     {

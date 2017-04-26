@@ -2,7 +2,6 @@
 using System.Data.OleDb;
 using System.Linq;
 using DatabaseSchema.OleDb;
-using DatabaseSchema.OleDb.Tests;
 using DatabaseSchema.Tests.Helpers;
 using Moq;
 using NUnit.Framework;
