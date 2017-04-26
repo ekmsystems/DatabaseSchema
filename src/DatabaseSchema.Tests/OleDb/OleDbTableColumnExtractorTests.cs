@@ -64,6 +64,45 @@ namespace DatabaseSchema.Tests.OleDb
         }
 
         [Test]
+        public void Extract_WithNullableValuesSet_ShouldReturn_CollectionOf_DbColumn()
+        {
+            var columns = new[]
+            {
+                new OleDbColumn
+                {
+                    Name = "Price",
+                    DataType = DbType.Decimal,
+                    OleDbType = OleDbType.Decimal,
+                    IsNullable = false,
+                    Position = 1,
+                    MaxLength = 10,
+                    NumericPrecision = 1,
+                    NumericScale = 2
+                }
+            };
+            var schema = TableColumnSchemaHelper.Build(columns);
+
+            _connection
+                .Setup(x => x.GetOleDbSchemaTable(OleDbSchemaGuid.Columns, new object[] { null, null, "test_1" }))
+                .Returns(schema);
+
+            var results = _extractor.Extract("test_1").ToArray();
+
+            Assert.AreEqual(1, results.Length);
+
+            for (var i = 0; i < columns.Length; i++)
+            {
+                Assert.AreEqual(columns[i].Name, results[i].Name);
+                Assert.AreEqual(columns[i].DataType, results[i].DataType);
+                Assert.AreEqual(columns[i].IsNullable, results[i].IsNullable);
+                Assert.AreEqual(columns[i].Position, results[i].Position);
+                Assert.AreEqual(columns[i].MaxLength, results[i].MaxLength);
+                Assert.AreEqual(columns[i].NumericPrecision, results[i].NumericPrecision);
+                Assert.AreEqual(columns[i].NumericScale, results[i].NumericScale);
+            }
+        }
+
+        [Test]
         public void Extract_WithRealConnection_ShouldReturn_CollectionOf_DbColumn()
         {
             using (var connection = new OleDbConnectionWrapper(TestDatabase.GetConnection()))
