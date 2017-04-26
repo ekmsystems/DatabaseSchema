@@ -101,6 +101,7 @@
     <Compile Include="Helpers\TableColumnSchemaHelper.cs" />
     <Compile Include="Helpers\TableIndexSchemaHelper.cs" />
     <Compile Include="OleDb\OleDbSchemaReaderTests.cs" />
+    <Compile Include="OleDb\OleDbTableEnumeratorTests.cs" />
     <Compile Include="OleDb\OleDbTypeToDbTypeConverterTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="OleDb\OleDbTableColumnExtractorTests.cs" />

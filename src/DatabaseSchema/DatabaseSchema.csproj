@@ -81,10 +81,12 @@
     <Compile Include="DbSchema.cs" />
     <Compile Include="IDbSchemaReader.cs" />
     <Compile Include="ITableColumnExtractor.cs" />
+    <Compile Include="ITableEnumerator.cs" />
     <Compile Include="ITableIndexExtractor.cs" />
     <Compile Include="OleDb\OleDbColumn.cs" />
     <Compile Include="OleDb\OleDbConnectionWrapper.cs" />
     <Compile Include="OleDb\OleDbSchemaReader.cs" />
+    <Compile Include="OleDb\OleDbTableEnumerator.cs" />
     <Compile Include="OleDb\OleDbTypeToDbTypeConverter.cs" />
     <Compile Include="OleDb\OleDbTableColumnExtractor.cs" />
     <Compile Include="OleDb\OleDbTableIndexExtractor.cs" />
